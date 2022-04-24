@@ -47,6 +47,6 @@ function ToDi_Vehicle:onDraw(isActiveForInput, isSelectable)
 		setTextAlignment(RenderText.ALIGN_CENTER)
 		setTextColor(1,1,1,1)
 		setTextBold(true)
-		renderText(0.5,0.01,ToDi_Vehicle.ToDi_size, string.format("%.2f", self.ToDi.ToDi_HoT) .." " .. g_i18n:getText("METRE","FS22_ToolDisplay_LSF") .. " / " .. self.ToDi.ToDi_ang .. " " .. g_i18n:getText("DEGREE","FS22_ToolDisplay_LSF"));
+		renderText(0.5,0.01,ToDi_Vehicle.ToDi_size, string.format("%.2f", self.ToDi.ToDi_HoT) .." " .. g_i18n:getText("METRE","FS22_ToolDisplay") .. " / " .. self.ToDi.ToDi_ang .. " " .. g_i18n:getText("DEGREE","FS22_ToolDisplay"));
 	end;
 end;
