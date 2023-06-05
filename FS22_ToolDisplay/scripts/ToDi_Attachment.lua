@@ -127,6 +127,9 @@ function ToDi_Attachment:onPostLoad(savegame)
 		local xmlFile = savegame.xmlFile
 		local key = savegame.key ..".ToDi_Attachment"
 		
+		print("ToDi_Attachment:onPostLoad(savegame) key   -> "..key)
+		print("ToDi_Attachment:onPostLoad(savegame) value -> "..tostring(xmlFile:getBool(key.."#active")))
+				
         self.ToDi_A.corAngle = Utils.getNoNil(xmlFile:getInt(key.."#corAngle"),0)
 		self.ToDi_A.corHeight = Utils.getNoNil(xmlFile:getFloat(key.."#corHeight"),0)
 		self.ToDi_A.active = Utils.getNoNil(xmlFile:getBool(key.."#active"),false)
