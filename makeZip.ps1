@@ -2,7 +2,7 @@ $Timestamp = Get-Date -Format "yyyyMMddHHmm"
 Write-Output $Timestamp
 
 $include = @("*.xml", "*.lua", "*.i3d", "*.i3d.shapes", "*.i3d.anim", "*.dds", "*.ogg","*.wav","*.grle","*.mb","*.png")
-$zipfilename = "..\FS22_ToolDisplay.zip"
+$zipfilename = "..\zzzFS22_ToolDisplay.zip"
 
 
 if (test-path "$env:ProgramFiles\7-Zip\7z.exe") {
