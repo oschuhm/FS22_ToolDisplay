@@ -107,12 +107,15 @@ function ToDi_Attachment:onLoad()
 
 
     --activate if attacherJointControl or implement for frontloader/teleloader/skidsteer/wheelloader
-
-    if SpecializationUtil.hasSpecialization(AttacherJointControl, self.specializations) then
-        self.ToDi_A.active = true
+	--DebugUtil.printTableRecursively(self.specializations,"self.specializations -> ",0,1);
+	
+    --if SpecializationUtil.hasSpecialization(AttacherJointControl, self.specializations) then
+	if SpecializationUtil.hasSpecialization(frontloaderAttacher, self.specializations) then
+		self.ToDi_A.active = true
     else
         for _, joint in pairs (self.spec_attachable.inputAttacherJoints) do
-            if joint.jointType == 5 or joint.jointType == 10 or joint.jointType == 4 or joint.jointType == 14 then
+			--if joint.jointType == 5 or joint.jointType == 10 or joint.jointType == 4 or joint.jointType == 14 then
+			if joint.jointType == 6 or joint.jointType == 5 or joint.jointType == 17 or joint.jointType == 12 then
                 self.ToDi_A.active = true
                 break
             end
@@ -127,9 +130,6 @@ function ToDi_Attachment:onPostLoad(savegame)
 		local xmlFile = savegame.xmlFile
 		local key = savegame.key ..".ToDi_Attachment"
 		
-		print("ToDi_Attachment:onPostLoad(savegame) key   -> "..key)
-		print("ToDi_Attachment:onPostLoad(savegame) value -> "..tostring(xmlFile:getBool(key.."#active")))
-				
         self.ToDi_A.corAngle = Utils.getNoNil(xmlFile:getInt(key.."#corAngle"),0)
 		self.ToDi_A.corHeight = Utils.getNoNil(xmlFile:getFloat(key.."#corHeight"),0)
 		self.ToDi_A.active = Utils.getNoNil(xmlFile:getBool(key.."#active"),false)
@@ -139,7 +139,6 @@ end
 
 function ToDi_Attachment:onUpdate(dt, isActiveForInput)
 	if isActiveForInput and ToDi_Vehicle.ToDi_OnOff and self.ToDi_A.active and self.ToDi_A.parentVehicle ~= nil then
-		--print("ToDi_Attachment:onUpdate() "..self.typeName.." "..dt)
 		local x,y,z = localToLocal(self.ToDi_A.node,self.ToDi_A.parentVehicle.components[1].node, 0, 0, 0)
 		local xD,yD,zD = localDirectionToLocal(self.ToDi_A.node,self.ToDi_A.parentVehicle.components[1].node, self.ToDi_A.xL, self.ToDi_A.yL, self.ToDi_A.zL)
 						

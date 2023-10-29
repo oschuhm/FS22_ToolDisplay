@@ -194,7 +194,7 @@ function AddSpecialization:add(ss)
 					currentTypeCount[1] = currentTypeCount[1] + 1;
 						
 					if ss.debug then
-						print(string.format(AddSpecialization.printHeader, ss.name, "Info", "Inserted on " .. vehicleType));
+						print(string.format(AddSpecialization.printHeader, ss.name, "Info", "Inserted " .. ss.name .. " on " .. vehicleType));
 					end;
 				end;
 			end;
@@ -208,19 +208,20 @@ end;
 -- This can be replaced with an table too if that is much more preferred.
 AddSpecialization:loadXMLModDesc();
 
+	for i, ss in ipairs(AddSpecialization.specializationToAdd) do
+		-- Add specialization name to not allowed
+		table.insert(ss.restrictions, {ss.name, AddSpecialization.RES_NOT_ALLOWED});
+		table.insert(ss.searchWords,  {ss.name, AddSpecialization.RES_NOT_ALLOWED});
 
-for i, ss in ipairs(AddSpecialization.specializationToAdd) do
-	-- Add specialization name to not allowed
-	table.insert(ss.restrictions, {ss.name, AddSpecialization.RES_NOT_ALLOWED});
-	table.insert(ss.searchWords,  {ss.name, AddSpecialization.RES_NOT_ALLOWED});
-
-	
-	if g_specializationManager:getSpecializationByName(ss.name) == nil then
-		g_specializationManager:addSpecialization(ss.name, ss.className, ss.filename, nil);
-	
-		-- Key functions are called early so we need to add the specialization before it gets to that stage.
-		AddSpecialization:add(ss);
-	else
-		print(string.format(AddSpecialization.printHeader, ss.name, "Error", "Specialization have been loaded already by another mod! This process will stop now."));
+		
+		if g_specializationManager:getSpecializationByName(ss.name) == nil then
+			--print("-- ToDi call g_specializationManager:addSpecialization("..ss.name..", "..ss.className..", "..ss.filename..", nil);");
+			g_specializationManager:addSpecialization(ss.name, ss.className, ss.filename, nil);
+		
+			-- Key functions are called early so we need to add the specialization before it gets to that stage.
+			--print("-- ToDi call AddSpecialization:add("..ss..");");
+			AddSpecialization:add(ss);
+		else
+			print(string.format(AddSpecialization.printHeader, ss.name, "Error", "Specialization have been loaded already by another mod! This process will stop now."));
+		end;
 	end;
-end;
