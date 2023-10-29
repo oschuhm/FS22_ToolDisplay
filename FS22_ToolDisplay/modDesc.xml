@@ -78,7 +78,7 @@ V1.0.2.0 Skript wird neu in allen Anbaugeräten hinzugefügt, auch in Mods, welc
 		<specialization name="ToDi_Attachment" className="ToDi_Attachment" filename="scripts/ToDi_Attachment.lua" debug="false">
 			<vehicleTypeLimit   state="false"	name="trainTrailer" />
 			<vehicleTypeLimit   state="false"	name="trainTimberTrailer" />
-			<vehicleTypeLimit   state="false"	name="FS19_broom.broom" />
+			<!--<vehicleTypeLimit   state="false"	name="FS19_broom.broom" />-->
 			<restrictions	   state="0"		name="attachable" />
 		</specialization>
 		<specialization name="ToDi_Vehicle" className="ToDi_Vehicle" filename="scripts/ToDi_Vehicle.lua" debug="false">
