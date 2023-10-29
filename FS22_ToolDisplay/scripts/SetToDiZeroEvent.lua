@@ -65,10 +65,8 @@ function SetToDiZeroEvent.sendEvent(vehicle, corAngle, corHeight, active, noEven
 	--print("SetToDiZeroEvent.sendEvent")
     if noEventSend == nil or noEventSend == false then
         if g_server ~= nil then
-		    print("server")
             g_server:broadcastEvent(SetToDiZeroEvent:new(vehicle, corAngle, corHeight, active), nil, nil, vehicle);
         else
-		    print("client")
             g_client:getServerConnection():sendEvent(SetToDiZeroEvent:new(vehicle, corAngle, corHeight, active));
         end;
     end;
