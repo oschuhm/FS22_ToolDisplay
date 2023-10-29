@@ -15,19 +15,16 @@ source(g_currentModDirectory .. "scripts/SetToDiZeroEvent.lua")
 
 
 function ToDi_Attachment.prerequisitesPresent(specializations)
-	--print("ToDi_Attachment.prerequisitesPresent(specializations)")
 	return true
 end
 
 
 function ToDi_Attachment.registerFunctions(vehicleType)
-	--print("ToDi_Attachment.registerFunctions")
     SpecializationUtil.registerFunction(vehicleType, "setToDiZero", ToDi_Attachment.setToDiZero)
 end
 
 
 function ToDi_Attachment.registerEventListeners(vehicleType)
-	--print("ToDi_Attachment.registerEventListeners(vehicleType)")
 	for i, v in ipairs({"onLoad","onPostLoad","onActivate","onDeactivate","onUpdate","onRegisterActionEvents","saveToXMLFile","onReadStream","onWriteStream"}) do
 		SpecializationUtil.registerEventListener(vehicleType, v, ToDi_Attachment)
 	end
@@ -35,8 +32,6 @@ end
 
 
 function ToDi_Attachment:onLoad()
-	-- print("ToDi_Attachment:onLoad")
-	-- print(self.typeName)
 	self.ToDi_A = {}
 	self.ToDi_A.corAngle = 0
 	self.ToDi_A.corHeight = 0
@@ -54,9 +49,7 @@ function ToDi_Attachment:onLoad()
 	
 	--Dischargeable
 	if SpecializationUtil.hasSpecialization(Dischargeable, self.specializations) then
-		-- print("ToDi DISCHARGEABLE")
         if SpecializationUtil.hasSpecialization(Shovel, self.specializations) then
-            -- print("ToDi Shovel")
             if self.spec_shovel.shovelDischargeInfo.node ~= nil then
                self.ToDi_A.node = self.spec_shovel.shovelDischargeInfo.node
             end
@@ -107,14 +100,12 @@ function ToDi_Attachment:onLoad()
 
 
     --activate if attacherJointControl or implement for frontloader/teleloader/skidsteer/wheelloader
-	--DebugUtil.printTableRecursively(self.specializations,"self.specializations -> ",0,1);
 	
     --if SpecializationUtil.hasSpecialization(AttacherJointControl, self.specializations) then
 	if SpecializationUtil.hasSpecialization(frontloaderAttacher, self.specializations) then
 		self.ToDi_A.active = true
     else
         for _, joint in pairs (self.spec_attachable.inputAttacherJoints) do
-			--if joint.jointType == 5 or joint.jointType == 10 or joint.jointType == 4 or joint.jointType == 14 then
 			if joint.jointType == 6 or joint.jointType == 5 or joint.jointType == 17 or joint.jointType == 12 then
                 self.ToDi_A.active = true
                 break
@@ -125,7 +116,6 @@ end
 
 
 function ToDi_Attachment:onPostLoad(savegame)
-	--print("ToDi_Attachment:onPostLoad")
 	if savegame ~= nil then
 		local xmlFile = savegame.xmlFile
 		local key = savegame.key ..".ToDi_Attachment"
@@ -155,7 +145,6 @@ end
 
 
 function ToDi_Attachment:onActivate()
-	--print("ToDi_Attachment:onActivate")
 	self.ToDi_A.parentVehicle = self:getRootVehicle()
 	local __,__,z = localToLocal(self.ToDi_A.node,self.ToDi_A.parentVehicle.components[1].node, 0, 0, 0)
 	if z > 0 then
@@ -167,7 +156,6 @@ end
 
 
 function ToDi_Attachment:onDeactivate()
-	--print("ToDi_Attachment:onDeactivate")
 	if self.ToDi_A.parentVehicle ~= nil and self.ToDi_A.parentVehicle.ToDi ~= nil then
 		self.ToDi_A.parentVehicle.ToDi.show = false
 	end
@@ -178,7 +166,6 @@ end
 
 
 function ToDi_Attachment:onRegisterActionEvents(isActiveForInputIgnoreSelection)
-    --print("ToDi_Attachment:onRegisterActionEvents")
 	local spec = self.spec_ToDi_Attachment
 	if self.isClient then
 		self:clearActionEventsTable(spec.actionEvents)
@@ -207,7 +194,6 @@ end
 
 
 function ToDi_Attachment:saveToXMLFile(xmlFile, key)
-	--print("ToDi_Attachment:saveToXMLFile")
 	xmlFile:setInt(key.."#corAngle", self.ToDi_A.corAngle)
 	xmlFile:setFloat(key.."#corHeight", self.ToDi_A.corHeight)
 	xmlFile:setBool(key.."#active", self.ToDi_A.active)
@@ -215,7 +201,6 @@ end
 
 
 function ToDi_Attachment.actionEventSetHeight(self, actionName, inputValue, callbackState, isAnalog)
-	--print("ToDi_Attachment.actionEventSetHeight")
  	if ToDi_Vehicle.ToDi_OnOff and self.ToDi_A.parentVehicle ~= nil then
 		if self.ToDi_A.parentVehicle.ToDi.ToDi_HoT ~= 0 then
 			local corHeight = round((self.ToDi_A.corHeight - self.ToDi_A.parentVehicle.ToDi.ToDi_HoT)*100)/100
@@ -226,7 +211,6 @@ end
 
 
 function ToDi_Attachment.actionEventSetAngle(self, actionName, inputValue, callbackState, isAnalog)
-	--print("ToDi_Attachment.actionEventSetAngle")
 	if ToDi_Vehicle.ToDi_OnOff and self.ToDi_A.parentVehicle ~= nil then
 		if self.ToDi_A.parentVehicle.ToDi.ToDi_ang ~= 0 then
 			local corAngle = round(self.ToDi_A.corAngle - (self.ToDi_A.dir*self.ToDi_A.parentVehicle.ToDi.ToDi_ang))
@@ -237,7 +221,6 @@ end
 
 
 function ToDi_Attachment.actionEventActive(self, actionName, inputValue, callbackState, isAnalog)
-	--print("ToDi_Attachment.actionEventActive")
 	if ToDi_Vehicle.ToDi_OnOff then
 		local active = not self.ToDi_A.active
 		self:setToDiZero(self.ToDi_A.corAngle, self.ToDi_A.corHeight, active)
@@ -250,7 +233,6 @@ function ToDi_Attachment.actionEventActive(self, actionName, inputValue, callbac
 end
 
 function ToDi_Attachment.actionEventPLUS(self, actionName, inputValue, callbackState, isAnalog)
-	--print("ToDi_Attachment.actionEventPLUS")
 	if ToDi_Vehicle.ToDi_OnOff then
 		ToDi_Vehicle.ToDi_size = ToDi_Vehicle.ToDi_size * 1.1
 	end
@@ -258,14 +240,12 @@ end
 
 
 function ToDi_Attachment.actionEventMINUS(self, actionName, inputValue, callbackState, isAnalog)
-	--print("ToDi_Attachment.actionEventMINUS")
 	if ToDi_Vehicle.ToDi_OnOff then
 		ToDi_Vehicle.ToDi_size = ToDi_Vehicle.ToDi_size / 1.1
 	end
 end
 
 function ToDi_Attachment.actionEventOnOff(self, actionName, inputValue, callbackState, isAnalog)
-	--print("ToolDisplay:ToolDisplay_OnOff")
 	if self.ToDi_A.active then
 		ToDi_Vehicle.ToDi_OnOff = not ToDi_Vehicle.ToDi_OnOff
 	else
@@ -278,21 +258,18 @@ end
 
 
 function ToDi_Attachment:onReadStream(streamId, connection)
-    --print("ToDi_Attachment:onReadStream")
 	self.ToDi_A.corAngle = streamReadInt16(streamId)
 	self.ToDi_A.corHeight = streamReadInt16(streamId)/100
 end
 
 
 function ToDi_Attachment:onWriteStream(streamId, connection)
-	--print("ToDi_Attachment:onWriteStream")
     streamWriteInt16(streamId, math.floor(self.ToDi_A.corAngle))
     streamWriteInt16(streamId, math.floor(self.ToDi_A.corHeight*100))
 end
 
 
 function ToDi_Attachment:setToDiZero(corAngle, corHeight, active, noEventSend)
-	--print("ToDi_Attachment:setToDiZero")
 	SetToDiZeroEvent.sendEvent(self, corAngle, corHeight, active, noEventSend)
 	
 	local spec = self.spec_ToDi_Attachment
@@ -306,11 +283,9 @@ function ToDi_Attachment:setToDiZero(corAngle, corHeight, active, noEventSend)
 	if active ~= nil then
 		self.ToDi_A.active = active
 	end
-    --print("ToDi_Attachment:setToDiZero finished")
 end
 
 
 function round(n)
-	-- print("round")
 	return math.floor(n+0.5)
 end
