@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="65">
 	<author>LSFarmers</author>
-	<version>0.0.0.4</version>
+	<version>0.0.0.5</version>
 	<title>
 		<en>Display For Tool Position</en>
 	<de>Anzeige Für Werkzeug Stellung</de>
@@ -78,6 +78,8 @@ V1.0.2.0 Skript wird neu in allen Anbaugeräten hinzugefügt, auch in Mods, welc
 		<specialization name="ToDi_Attachment" className="ToDi_Attachment" filename="scripts/ToDi_Attachment.lua" debug="false">
 			<vehicleTypeLimit   state="false"	name="trainTrailer" />
 			<vehicleTypeLimit   state="false"	name="trainTimberTrailer" />
+			<vehicleTypeLimit   state="false"	name="stumpCutter" />
+			<vehicleTypeLimit   state="false"	name="stumpCutterCultivatorPlow" />
 			<!--<vehicleTypeLimit   state="false"	name="FS19_broom.broom" />-->
 			<restrictions	   state="0"		name="attachable" />
 		</specialization>
